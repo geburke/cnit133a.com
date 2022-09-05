@@ -1,18 +1,10 @@
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+const { elementIsEnabled } = require("selenium-webdriver/lib/until");
 
 const desc = "cnit133a homework 2";
 const my_visit = "./../../../hw2/hw2.html";
+
 const my_certs = ['Beginning Web Development Certificate',
                   'Advanced Web Development Certificate',
                   'Optional for Web Development Certificate',
@@ -22,13 +14,8 @@ function make_id(my_str) {
   return(my_str.toLowerCase()).replaceAll(' ', '-');
 }
 
-
 describe(desc, () => {
   beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
     cy.visit(my_visit)
   })
 
@@ -37,15 +24,24 @@ describe(desc, () => {
       expect(element.text()).to.be.oneOf(my_certs);
     })
   })
-  it('hrefs', () => {
-    cy.log("moo")
-    expect("moo").to.be.equal("moo");
+
+  it('check for hrefs', () => {
+    cy.get('.content ul li a').each(element => {
+      let my_id = make_id(element.text())
+      expect(element.attr('href')).to.be.equal("#" + my_id)
+
+    })
   })
+  it('check for ids', () => {
+    let tmp_my_certs = my_certs
+    for( let cert_name of my_certs)  {
+      let my_id = make_id(cert_name)
+
+      cy.get('#' + my_id).invoke('text').then((text) => {
+        expect(text).to.be.oneOf(tmp_my_certs)
+        //remove the matched cert
+        tmp_my_certs = tmp_my_certs.filter(item => item !== text)
+      });
+    }
+  });
 })
-
-
-//  it('Check h2 cert anchors', () => {
-//    cy.get('.content ul li').each(element => {
-//      expect(element.text()).to.be.oneOf(my_certs);
-//      cy.log("-->", element.text());
-//    })
