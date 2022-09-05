@@ -35,7 +35,7 @@ jobs:
           command: |
             html5validator --ignore-re my_*.html  --root .
 workflows:
-#  version: 2.1
+#  version: 2.1 #
   validate_and_test:
     jobs:
       - validate_the_html
