@@ -1,5 +1,8 @@
 {
-  "name": "[project-name]",
-  "description": "[project-description]",
-  "version": "1.0.0"
+  "name": "cnit133a",
+  "description": "cnit133a",
+  "version": "1.0.0",
+  "dependencies": {
+    "cypress": "^10.7.0"
+  }
 }
