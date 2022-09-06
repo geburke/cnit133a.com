@@ -1,9 +1,29 @@
 /// <reference types="cypress" />
 
+const prod_url = 'https://cnit133a.com'
+const staging_url = 'https://s.cnit133a.com'
+const file_name = "./../../../hw2/hw2.html";
+
+let url = ""
+
+function get_url() {
+    let branch_name = cy.exec('git rev-parse --abbrev-ref HEAD')
+    .toString().trim();
+
+    if (process.argv[2] === "prod" || branch_name === "master") {
+        url = prod_url;
+    } else if (process.argv[2] === "staging" || branch_name == "dev") {
+        url = staging_url;
+    } else {
+        url = file_name;
+    }
+    return url;
+}
+
 const { elementIsEnabled } = require("selenium-webdriver/lib/until");
 
+
 const desc = "cnit133a homework 2";
-const my_visit = "./../../../hw2/hw2.html";
 
 const my_certs = ['Beginning Web Development Certificate',
                   'Advanced Web Development Certificate',
@@ -16,7 +36,9 @@ function make_id(my_str) {
 
 describe(desc, () => {
   beforeEach(() => {
-    cy.visit(my_visit)
+    url = get_url();
+    cy.log("url:", url)
+    cy.visit(url)
   })
 
   it('Check h2 cert text', () => {
