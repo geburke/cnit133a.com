@@ -2,7 +2,7 @@
   "name": "cnit133a",
   "description": "cnit133a",
   "version": "1.0.0",
-  "dependencies": {
+  "devDependencies": {
     "cypress": "^10.7.0"
   }
 }
