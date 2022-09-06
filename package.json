@@ -4,5 +4,8 @@
   "version": "1.0.0",
   "devDependencies": {
     "cypress": "^10.7.0"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.4.0"
   }
 }
